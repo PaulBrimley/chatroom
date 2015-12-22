@@ -4,28 +4,66 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="//www.parsecdn.com/js/parse-1.6.12.min.js"></script>
   </head>
   <body ng-controller="mainCtrl">
-    <div class="main-container">
-      <h1> DevMountain Chat Room </h1>
 
-      <form ng-submit="postData(message)">
-        <input class="form-control text-box" type="text" ng-model="message" placeholder="New Message">
-      </form>
-      <br/>
+      <h1>Paul's Chat Room</h1>
+      <span>Current User: {{currentUserName}} </span>
+      <span>Current Chat Room: {{currentRoomName}} </span>
+      <div class="mainContainer">
+        <div class="leftContainer">
+          <div>
+            <h4>Available Names</h4>
+            <div class="insideLeft">
+              <span ng-repeat="name in availableUserArray"><button class="btn-primary" ng-click="switchUser(name)">{{name}}</button>&nbsp</span>
+            </div>
+          </div>
+          <hr/>
+          <div>
+            <h4>Enter Name</h4>
+            <div>(must contain letters/numbers with no spaces):</div>
+            <input class="form-control text-box" placeholder="Enter Name" ng-model="currentUserName"></input>
+          </div>
+          <hr/>
+          <div>
+            <h4>Available Chat Rooms</h4>
+            <div class="insideLeft">
+              <span ng-repeat="room in availableRoomArray"><button class="btn-primary" ng-click="switchRooms(room)">{{room}}</button>&nbsp</span>
+            </div>
+          </div>
+          <hr/>
+          <div>
+            <h4>Create a new Room</h4>
+            <div>(must contain letters/numbers with no spaces):</div>
+            <form ng-submit="createNewRoom(newRoomName)">
+              <input class="form-control text-box" type="text" ng-model="newRoomName" placeholder="New Chat Room Name">
+            </form>
+          </div>
+        </div>
 
-      <input class="form-control text-box" ng-model="messageFilter" placeholder="Filter messages"></input>
 
-      <select class="form-control text-box" ng-model="order">
-        <option value="+">Date Ascending</option>
-        <option value="-">Date Descending</option>
-      </select>
+        <div class="middleContainer">
+          <form ng-submit="postData(currentUserName, currentRoomName, message)">
+            <input class="form-control text-box" type="text" ng-model="message" placeholder="New Message">
+          </form>
+          <br/>
 
-      <div class="messages-container">
-        <p ng-repeat="message in messages | filter: messageFilter | orderBy: order+'createdAt'"> {{message.text}} {{message.createdAt}}</p>
+          <div class="messages-container">
+            <div ng-repeat="message in currentRoomChats | filter: messageFilter | orderBy: order+'parsedDate'" ng-class="{'currentUser': message.userId === currentUserName, 'otherUsers': message.userId !== currentUserName}">{{message.userId}} - {{message.text}} - {{message.createdAt}}</div>
+          </div>
+        </div>
+
+
+        <div class="rightContainer">
+            <input class="form-control text-box" ng-model="messageFilter" placeholder="Filter messages"></input>
+
+            <select class="form-control text-box" ng-model="order">
+            <option value="+">Date Ascending</option>
+            <option value="-">Date Descending</option>
+          </select>
+        </div>
       </div>
-    </div>
-
 
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>

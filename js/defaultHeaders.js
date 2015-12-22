@@ -3,7 +3,7 @@ var app = angular.module('chatroom');
 app.factory('httpRequestInterceptor', function () {
   return {
     request: function (config) {
-      config.headers = {'X-Parse-Application-Id': '5oA4oab0RNwHkfRrXt5WlMqDnzUu6bcmpf4P2uKy', 'X-Parse-REST-API-Key': 'ZIKuhgCABMrP0kLnSMlEYWYlljNWtHnJzYaKwWc8'}
+      config.headers = {'X-Parse-Application-Id': 'LU4mg4i8uwOlFU35zuFOrR8GdxbL1dQJn9ghCqb0', 'X-Parse-REST-API-Key': 'Xk7CXGbIrPy6ApqyJShgPfvpTH9dxcCtKIYeZR1C'}
       return config;
     }
   };
